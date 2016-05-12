@@ -9,7 +9,7 @@ require 'poise'
 
 module GrubCookbook
   module Resource
-    # Resource for managing the Grub Configuration file. 
+    # Resource for managing the Grub Configuration file.
     class Grub < Chef::Resource
       include Poise(fused: true)
       provides(:grub)
@@ -25,16 +25,17 @@ module GrubCookbook
             n
           end
         end
-         s.map { |k,v| ["GRUB", k.upcase].join("_") + "=#{v}"}.join("\n")
+        s.map { |k,v| ["GRUB", k.upcase].join("_") + "=#{v}"}.join("\n")
       end
 
       action(:create) do
         notifying_block do
           # Write out grub config file
-          file new_resource.path do
-            content new_resource.to_s
+          unless new_resource.to_s.empty?
+            file new_resource.path do
+              content new_resource.to_s
+            end
           end
-
         end
       end
     end
