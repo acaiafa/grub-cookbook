@@ -25,7 +25,7 @@ module GrubCookbook
             n
           end
         end
-        s.map { |k,v| ["GRUB", k.upcase].join("_") + "=#{v}"}.join("\n")
+        s.map { |k,v| ["GRUB", k.upcase].join("_") + "=\"#{v}\""}.join("\n")
       end
 
       action(:create) do
